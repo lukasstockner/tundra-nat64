@@ -29,5 +29,7 @@ extern bool utils_xlat_addr__nat64_clat__translate_6to4_prefix_for_main_packet(c
 extern bool utils_xlat_addr__nat64_clat__translate_4to6_prefix_for_main_packet(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv4, uint8_t *out_ipv6);
 extern bool utils_xlat_addr__siit__translate_6to4_prefix_for_main_packet(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv6, uint8_t *out_ipv4);
 extern bool utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv4, uint8_t *out_ipv6);
+extern bool utils_xlat_addr__siit__translate_6to4_prefix_for_main_packet_local(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv6, uint8_t *out_ipv4);
+extern bool utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet_local(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv4, uint8_t *out_ipv6);
 extern bool utils_xlat_addr__nat64_clat_siit__translate_6to4_prefix_for_icmp_error_packet(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv6, uint8_t *out_ipv4);
 extern void utils_xlat_addr__nat64_clat_siit__translate_4to6_prefix_for_icmp_error_packet(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv4, uint8_t *out_ipv6);

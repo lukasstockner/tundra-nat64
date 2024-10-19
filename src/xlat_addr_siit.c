@@ -26,7 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 bool xlat_addr_siit__translate_4to6_addr_for_main_packet(tundra__thread_ctx *const ctx, const uint8_t *in_src_ipv4, const uint8_t *in_dst_ipv4, uint8_t *out_src_ipv6, uint8_t *out_dst_ipv6) {
-    if(!utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet(ctx, in_src_ipv4, out_src_ipv6))
+    if(!utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet_local(ctx, in_src_ipv4, out_src_ipv6))
         return false;
 
     return utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet(ctx, in_dst_ipv4, out_dst_ipv6);
@@ -43,7 +43,7 @@ bool xlat_addr_siit__translate_6to4_addr_for_main_packet(tundra__thread_ctx *con
     if(!utils_xlat_addr__siit__translate_6to4_prefix_for_main_packet(ctx, in_src_ipv6, out_src_ipv4))
         return false;
 
-    return utils_xlat_addr__siit__translate_6to4_prefix_for_main_packet(ctx, in_dst_ipv6, out_dst_ipv4);
+    return utils_xlat_addr__siit__translate_6to4_prefix_for_main_packet_local(ctx, in_dst_ipv6, out_dst_ipv4);
 }
 
 bool xlat_addr_siit__translate_6to4_addr_for_icmp_error_packet(tundra__thread_ctx *const ctx, const uint8_t *in_src_ipv6, const uint8_t *in_dst_ipv6, uint8_t *out_src_ipv4, uint8_t *out_dst_ipv4) {

@@ -37,6 +37,7 @@ static void _parse_router_config(conf_file_load__conf_entry **entries, tundra__c
 static void _parse_addressing_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
 static void _parse_addressing_nat64_clat_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
 static void _parse_addressing_nat64_clat_siit_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
+static void _parse_addressing_siit_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
 static void _parse_addressing_external_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
 static void _parse_addressing_external_unix_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
 static void _parse_addressing_external_tcp_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config);
@@ -193,6 +194,7 @@ static void _parse_addressing_config(conf_file_load__conf_entry **entries, tundr
 
     _parse_addressing_nat64_clat_config(entries, file_config);
     _parse_addressing_nat64_clat_siit_config(entries, file_config);
+    _parse_addressing_siit_config(entries, file_config);
     _parse_addressing_external_config(entries, file_config);
     _parse_addressing_external_unix_config(entries, file_config);
     _parse_addressing_external_tcp_config(entries, file_config);
@@ -231,6 +233,15 @@ static void _parse_addressing_nat64_clat_siit_config(conf_file_load__conf_entry 
     } else {
         UTILS__MEM_ZERO_OUT(file_config->addressing_nat64_clat_siit_prefix, 16);
         file_config->addressing_nat64_clat_siit_allow_translation_of_private_ips = false;
+    }
+}
+
+static void _parse_addressing_siit_config(conf_file_load__conf_entry **entries, tundra__conf_file *const file_config) {
+    if(file_config->addressing_mode == TUNDRA__ADDRESSING_MODE_SIIT) {
+        // --- addressing.siit.prefix ---
+        conf_file_load__find_ipv6_prefix(entries, "addressing.siit.prefix", file_config->addressing_siit_source_prefix, NULL);
+    } else {
+        memcpy(file_config->addressing_siit_source_prefix, file_config->addressing_nat64_clat_siit_prefix, 16);
     }
 }
 

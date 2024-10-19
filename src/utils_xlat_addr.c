@@ -101,6 +101,34 @@ bool utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet(const tundra__
     return true;
 }
 
+bool utils_xlat_addr__siit__translate_6to4_prefix_for_main_packet_local(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv6, uint8_t *out_ipv4) {
+    if(UTILS_IP__IPV6_ADDR_EQ(in_ipv6, ctx->config->router_ipv6))
+        return false;
+
+    if(!UTILS_IP__IPV6_PREFIX_EQ(in_ipv6, ctx->config->addressing_siit_source_prefix))
+        return false;
+
+    if(!_nat64_clat_siit__is_ipv4_embeddable_into_prefix(ctx, in_ipv6 + 12))
+        return false;
+
+    memcpy(out_ipv4, in_ipv6 + 12, 4);
+
+    return true;
+}
+
+bool utils_xlat_addr__siit__translate_4to6_prefix_for_main_packet_local(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv4, uint8_t *out_ipv6) {
+    if(!_nat64_clat_siit__is_ipv4_embeddable_into_prefix(ctx, in_ipv4))
+        return false;
+
+    memcpy(out_ipv6, ctx->config->addressing_siit_source_prefix, 12);
+    memcpy(out_ipv6 + 12, in_ipv4, 4);
+
+    if(UTILS_IP__IPV6_ADDR_EQ(out_ipv6, ctx->config->router_ipv6))
+        return false;
+
+    return true;
+}
+
 bool utils_xlat_addr__nat64_clat_siit__translate_6to4_prefix_for_icmp_error_packet(const tundra__thread_ctx *const ctx, const uint8_t *in_ipv6, uint8_t *out_ipv4) {
     if(!UTILS_IP__IPV6_PREFIX_EQ(in_ipv6, ctx->config->addressing_nat64_clat_siit_prefix))
         return false;

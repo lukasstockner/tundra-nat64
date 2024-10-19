@@ -64,6 +64,7 @@ typedef struct tundra__conf_file {
     // The items are ordered in a way to reduce struct padding as much as possible, which is the reason why they seem to be in a "somewhat random order".
     struct sockaddr_un addressing_external_unix_socket_info;
     uint8_t addressing_nat64_clat_siit_prefix[16];
+    uint8_t addressing_siit_source_prefix[16];
     uint8_t addressing_nat64_clat_ipv6[16];
     uint8_t router_ipv6[16];
     struct timeval addressing_external_unix_tcp_timeout;
